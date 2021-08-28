@@ -23,8 +23,8 @@ public class GetSum extends RecursiveTask<Long> {
         }
         long middle = (from+to)/2;
         GetSum sumPre = new GetSum(from, middle);
-        sumPre.fork();
+        sumPre.fork(); //쪼개고
         GetSum sumPost = new GetSum(middle+1, to);
-        return sumPost.compute()+sumPre.join();
+        return sumPost.compute()+sumPre.join(); //합친다
     }
 }

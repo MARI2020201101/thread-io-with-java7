@@ -15,7 +15,7 @@ public class ForkJoinSample {
         long to = 10;
 
         GetSum getSum = new GetSum(from, to);
-        Long result = mainPool.invoke(getSum);
+        Long result = mainPool.invoke(getSum); //일해라! ( fork-join 메서드 외부에서 호출)
         System.out.println("Fork join : total sum => " + from + " ~ " + to + " = result : "+result);
     }
     private void calculate2() {
@@ -23,7 +23,7 @@ public class ForkJoinSample {
         long to = 10;
 
         GetSum2 getSum = new GetSum2(from, to);
-        Long result = mainPool.invoke(getSum);
+        long result = mainPool.invoke(getSum);
         System.out.println("Fork join : total sum => " + from + " ~ " + to + " = result : "+result);
     }
 }
