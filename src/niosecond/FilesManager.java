@@ -2,18 +2,16 @@ package niosecond;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FilesManager {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         FilesManager manager = new FilesManager();
-        manager.readAndWrite("C:\\study\\thread-io-with-java7\\sample.txt");
+     //   manager.readAndWrite("C:\\study\\thread-io-with-java7\\sample.txt");
+        manager.copyMoveDelete(manager.readAndWrite("C:\\study\\thread-io-with-java7\\sample.txt"),"sample2.txt");
     }
 
     public List<String> getContents(){
@@ -52,4 +50,22 @@ public class FilesManager {
         return returnPath;
     }
 
+    public void copyMoveDelete(Path fromPath, String fileName) throws Exception {
+        Path toPath = fromPath.toAbsolutePath().getParent();
+        Path copyPath = toPath.resolve("copied");
+        if(!Files.exists(copyPath)){
+            Files.createDirectories(copyPath);
+        }
+        Path copiedFilePath = copyPath.resolve(fileName);
+        StandardCopyOption copyOption = StandardCopyOption.REPLACE_EXISTING;
+        Files.copy(fromPath,copiedFilePath,copyOption);
+
+        System.out.println("----------------copied file contents----------");
+        readFile(copiedFilePath);
+
+        Path movedFilePath = Files.move(copiedFilePath, copyPath.resolve("moved.txt"),copyOption);
+
+      // Files.delete(movedFilePath);
+       // Files.delete(copyPath);
+    }
 }
